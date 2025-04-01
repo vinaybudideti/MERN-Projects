@@ -1,0 +1,47 @@
+import TreeNode from './TreeNode';
+
+class Tree {
+  constructor() {
+    this.root = null;
+  }
+
+  addAccount(account) {
+    const newNode = new TreeNode(account);
+    if (this.root === null) {
+      this.root = newNode;
+    } else {
+      this._insertNode(this.root, newNode);
+    }
+  }
+
+  _insertNode(node, newNode) {
+    if (newNode.account.accountNumber < node.account.accountNumber) {
+      if (node.left === null) {
+        node.left = newNode;
+      } else {
+        this._insertNode(node.left, newNode);
+      }
+    } else {
+      if (node.right === null) {
+        node.right = newNode;
+      } else {
+        this._insertNode(node.right, newNode);
+      }
+    }
+  }
+
+  findAccount(accountNumber) {
+    return this._searchNode(this.root, accountNumber);
+  }
+
+  _searchNode(node, accountNumber) {
+    if (!node) return null;
+    if (accountNumber === node.account.accountNumber) return node.account;
+    if (accountNumber < node.account.accountNumber) {
+      return this._searchNode(node.left, accountNumber);
+    }
+    return this._searchNode(node.right, accountNumber);
+  }
+}
+
+export default Tree;
